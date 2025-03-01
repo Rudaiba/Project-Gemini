@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    /* Neural Pulse Theme - Light Mode */
+    --background: 220 33% 98%;
+    --foreground: 222 47% 11%;
+    
+    /* Primary Colors */
+    --primary-dark: 217 33% 17%;
+    --primary-light: 215 30% 22%;
+    
+    /* Accent Colors */
+    --accent-purple: 262 83% 58%;
+    --accent-blue: 217 91% 60%;
+    --accent-mint: 162 47% 50%;
+    
+    /* UI Elements */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    /* Interactive Elements */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 222 47% 11%;
+    
+    /* Effects */
+    --glow-purple: 262 83% 58%;
+    --glow-blue: 217 91% 60%;
+    --glow-mint: 162 47% 50%;
+    
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Neural Pulse Theme - Dark Mode */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    
+    /* Primary Colors */
+    --primary-dark: 217 33% 17%;
+    --primary-light: 215 30% 22%;
+    
+    /* UI Elements */
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    
+    /* Interactive Elements */
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .neural-grid {
+    background-image: 
+      linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+  }
+
+  .glow-effect {
+    position: relative;
+  }
+
+  .glow-effect::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(
+      to right,
+      hsl(var(--glow-purple)),
+      hsl(var(--glow-blue)),
+      hsl(var(--glow-mint))
+    );
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    border-radius: inherit;
+  }
+
+  .glow-effect:hover::after {
+    opacity: 0.2;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-background/80 backdrop-blur-xl border border-border/20 shadow-lg;
+  }
+
+  .floating-card {
+    @apply relative overflow-hidden rounded-xl bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl border border-border/20;
+    box-shadow: 0 4px 24px -1px hsl(var(--border) / 0.1);
+  }
+
+  .neural-button {
+    @apply relative px-4 py-2 rounded-lg bg-gradient-to-r from-accent-purple/10 via-accent-blue/10 to-accent-mint/10
+           hover:from-accent-purple/20 hover:via-accent-blue/20 hover:to-accent-mint/20
+           border border-border/20 transition-all duration-300
+           hover:scale-[1.02] hover:shadow-lg;
+  }
+
+  .neural-button::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(
+      to right,
+      hsl(var(--accent-purple)),
+      hsl(var(--accent-blue)),
+      hsl(var(--accent-mint))
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    border-radius: inherit;
+    filter: blur(8px);
+  }
+
+  .neural-button:hover::after {
+    opacity: 0.2;
+  }
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
